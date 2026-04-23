@@ -168,6 +168,47 @@ curl -sSI https://leilabirr.github.io/ | head -1
 
 ---
 
+## Rollback (if the live site breaks)
+
+Every past commit is a known-good snapshot. Rollback is additive — no history rewriting, no force-pushing.
+
+```bash
+# 1. See recent commits
+git log --oneline -5
+
+# 2. Undo the most recent commit by creating a new revert commit.
+#    Safe on a pushed branch — no --force required.
+git revert HEAD --no-edit
+git push
+
+# 3. Verify the rebuild and live site
+gh api /repos/leilabirr/leilabirr.github.io/pages/builds/latest --jq '.status'
+# Expected: "built"
+
+curl -sSI https://leilabirr.github.io/ | head -1
+# Expected: HTTP/2 200
+```
+
+### Roll back several commits at once
+To restore to a known-good commit `<sha>` (e.g. `6bcb899`):
+```bash
+git revert --no-commit <sha>..HEAD
+git commit -m "revert: restore to <sha>"
+git push
+```
+
+### Restore a single file from history
+```bash
+git checkout <sha> -- path/to/file
+git add path/to/file
+git commit -m "restore path/to/file from <sha>"
+git push
+```
+
+**Do not use `git reset --hard` + `git push --force` as a rollback strategy** on this repo. `git revert` is the safe, always-correct approach for pushed commits.
+
+---
+
 ## Common edits
 
 - **A shop URL changed** — update the `href` on the matching `<a class="shop-card">` in `index.html`.
