@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 56" role="img" aria-label="Facebook Marketplace">
+  <g transform="translate(0,6)">
+    <path d="M22 2 L42 14 v22 a6 6 0 0 1-6 6 H8 a6 6 0 0 1-6-6 V14 z" fill="#1877F2"/>
+    <rect x="10" y="18" width="24" height="18" rx="2" fill="#fff"/>
+    <rect x="14" y="22" width="6" height="10" fill="#1877F2"/>
+    <rect x="24" y="22" width="6" height="10" fill="#1877F2"/>
+    <path d="M2 14 L22 2 L42 14" fill="none" stroke="#1877F2" stroke-width="4" stroke-linejoin="round"/>
+  </g>
+  <text x="54" y="36" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="20" fill="#1877F2" letter-spacing="-0.3">Marketplace</text>
+</svg>
