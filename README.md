@@ -110,6 +110,18 @@ gh auth switch --user leilabirr
 gh auth login --hostname github.com --git-protocol https --web
 ```
 
+**Also verify git's credential helper routes through gh.** `gh auth status` being green does **not** guarantee `git push` will use the gh token — git has its own credential cache (macOS Keychain, etc.) which can silently use a different account and cause a `403 Permission denied` on push.
+
+Check and fix:
+```bash
+git config --global --get-all credential.https://github.com.helper
+# Expected to include:  !/opt/homebrew/bin/gh auth git-credential
+
+# If the gh helper isn't listed, run:
+gh auth setup-git --hostname github.com
+```
+This is a one-time-per-machine step. Once set, `git push` uses whichever account is active in `gh`.
+
 The repo-local `git config` is also scoped to this project:
 ```
 user.name  = Leila Birr
